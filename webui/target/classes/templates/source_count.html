@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+    <!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content">
+
+    <!--本日各渠道活跃数统计-->
+    <div class="row" style="margin-top: 50px">
+
+        <div class="col-sm-3">
+            <select id="source-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="source-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="source-activity-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+
+        <div class="col-sm-3" >
+            <input id="source-activity-btn" type="button" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">本日各渠道活跃数统计</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="source_activity_count" style="width: 1000px;height:600px;"></div>
+        </div>
+    </div>
+
+    <!--本日各渠道新增用户数-->
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="source-new-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="source-new-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="source-new-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input id="source-new-btn" type="button" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">本日各渠道新增用户数</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="source_add_day" style="width: 1000px;height:600px;"></div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    var newArr = [];
+    var activityArr = [];
+
+    var newData = [[${sourceNewCountEntity}]];
+    var activityData = [[${sourceUserCountEntity}]]
+
+    $.each(newData.data,function (n, val) {
+       var tmp = {value:val.count,name:val.sourceName};
+       newArr.push(tmp);
+    });
+
+    $.each(activityData.data,function (n, val) {
+        var tmp = {value:val.count,name:val.sourceName};
+        activityArr.push(tmp);
+    });
+
+    // import * as echarts from 'echarts';
+    // 本日各渠道活跃数统计
+    var sourceActivityCountViewChart = echarts.init(document.getElementById('source_activity_count'));
+
+    // 指定图表的配置项和数据
+    var colors = ['#5470C6', '#91CC75', '#EE6666'];
+
+    source_activity_count_option = {
+        title: {
+            text: '站点用户访问来源',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+        },
+        series: [
+            {
+                name: '访问来源',
+                type: 'pie',
+                radius: '50%',
+                data: activityArr,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    sourceActivityCountViewChart.setOption(source_activity_count_option);
+
+    // 本日各渠道新增数统计
+    var sourceAddChart = echarts.init(document.getElementById('source_add_day'));
+
+    source_add_option = {
+        title: {
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+        },
+        series: [
+            {
+                name: '新增数',
+                type: 'pie',
+                radius: '50%',
+                data: newArr,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    sourceAddChart.setOption(source_add_option);
+
+    //================= 点击事件 ====================
+    $("#source-activity-btn").click(function () {
+
+        var year = $("#source-activity-year option:selected").val();
+        var month = $("#source-activity-month option:selected").val();
+        var day = $("#source-activity-day option:selected").val();
+        month = month.length == 2? month:'0'+month;
+        day = day.length == 2?day:'0'+day;
+
+        $.ajax({
+            url: "/source_activity",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+                activityArr = [];
+                $.each(data.data,function (n, val) {
+                    var tmp = {value:val.count,name:val.sourceName};
+                    activityArr.push(tmp);
+                });
+
+                source_activity_count_option = {
+                    title: {
+                        text: '站点用户访问来源',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '50%',
+                            data: activityArr,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                sourceActivityCountViewChart.setOption(source_activity_count_option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+
+        })
+
+    });
+
+    $("#source-new-btn").click(function () {
+
+        var year = $("#source-new-year option:selected").val();
+        var month = $("#source-new-month option:selected").val();
+        var day = $("#source-new-day option:selected").val();
+        month = month.length == 2? month:'0'+month;
+        day = day.length == 2?day:'0'+day;
+
+        $.ajax({
+            url: "/source_new",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+                newArr = [];
+                $.each(data.data,function (n, val) {
+                    var tmp = {value:val.count,name:val.sourceName};
+                    newArr.push(tmp);
+                });
+
+                source_add_option = {
+                    title: {
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                    },
+                    series: [
+                        {
+                            name: '新增数',
+                            type: 'pie',
+                            radius: '50%',
+                            data: newArr,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                sourceAddChart.setOption(source_add_option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+
+        })
+
+    });
+
+</script>
+</body>
+</html>

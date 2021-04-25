@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+
+    <title> hAdmin- 主页</title>
+
+    <meta name="keywords" content="">
+    <meta name="description" content="">
+
+    <!--[if lt IE 9]>
+    <meta http-equiv="refresh" content="0;ie.html" />
+    <![endif]-->
+
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/font-awesome.min.css?v=4.4.0" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
+    <div id="wrapper">
+        <!--左侧导航开始-->
+        <nav class="navbar-default navbar-static-side" role="navigation">
+            <div class="nav-close"><i class="fa fa-times-circle"></i>
+            </div>
+            <div class="sidebar-collapse">
+                <ul class="nav" id="side-menu">
+                    <li class="nav-header">
+                        <div class="dropdown profile-element">
+                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                <span class="clear">
+                                    <span class="block m-t-xs" style="font-size:20px;">
+                                        <i class="fa fa-area-chart"></i>
+                                        <strong class="font-bold">Admin</strong>
+                                    </span>
+                                </span>
+                            </a>
+                        </div>
+                        <div class="logo-element">Admin
+                        </div>
+                    </li>
+                    <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+                        <span class="ng-scope">分类</span>
+                    </li>
+                    <li>
+                        <a class="J_menuItem" href="/index_v1.html">
+                            <i class="fa fa-home"></i>
+                            <span class="nav-label">主页</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <i class="fa fa fa-bar-chart-o"></i>
+                            <span class="nav-label">统计情况</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level">
+                            <li>
+                                <a class="J_menuItem" href="/user_activity.html">用户活跃情况</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/day_add.html">日新增统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/user_retention.html">用户留存统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/slient_count.html">沉默用户数统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/wastage_count.html">用户流失统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/back_count.html">用户回流数统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/page_view_count.html">页面浏览统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/appoint_look_deal_count.html">预约&带看&成交数统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/test.html">报备数统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/collect.html">收藏数统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/list_view_count.html">楼盘列表页浏览统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/detail_view_count.html">楼盘详情页浏览统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/province_count.html">各省市活跃情况统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/search_count.html">搜索统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/source_count.html">渠道统计</a>
+                            </li>
+                            <li>
+                                <a class="J_menuItem" href="/test.html">用户画像</a>
+                            </li>
+                        </ul>
+                    </li>
+
+                </ul>
+            </div>
+        </nav>
+        <!--左侧导航结束-->
+        <!--右侧部分开始-->
+        <div id="page-wrapper" class="gray-bg dashbard-1">
+
+            <div class="row J_mainContent" id="content-main">
+                <iframe id="J_iframe" width="100%" height="100%" src="index_v1.html?v=4.0" frameborder="0" data-id="index_v1.html" seamless></iframe>
+            </div>
+        </div>
+        <!--右侧部分结束-->
+    </div>
+
+    <!-- 全局js -->
+    <script src="/js/jquery.min.js?v=2.1.4"></script>
+    <script src="/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="/js/plugins/layer/layer.min.js"></script>
+
+    <!-- 自定义js -->
+    <script src="/js/hAdmin.js?v=4.1.0"></script>
+    <script type="text/javascript" src="/js/index.js"></script>
+
+    <!-- 第三方插件 -->
+    <script src="/js/plugins/pace/pace.min.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+<!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content" style="padding-top: 200px">
+
+
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="day-add-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="day-add-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="day-add-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input type="button" id="day-add-btn" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">最近7天每日新增用户数</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="day_add" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    //存放日期
+    var dtArr = [];
+    //存放数值
+    var valueArr = [];
+    //获取后台返回的数据
+    var data = [[${userAddEntity}]];
+
+    //遍历
+    $.each(data.data,function (n, value) {
+        dtArr.push(value.createDate)
+        valueArr.push(value.newUidCount)
+    })
+
+    // import * as echarts from 'echarts';
+    // 日活跃表
+    var dayChart = echarts.init(document.getElementById('day_add'));
+
+    // 指定图表的配置项和数据
+    option = {
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['每日新增用户数']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataView: {show: true, readOnly: false},
+                magicType: {show: true, type: ['line', 'bar']},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                data: dtArr
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '每日新增用户数',
+                type: 'bar',
+                // data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6],
+                data: valueArr,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    dayChart.setOption(option);
+
+
+    //============== 按钮点击事件 ==================
+    $("#day-add-btn").click(function () {
+        var year = $("#day-add-year option:selected").val();
+        var month = $("#day-add-month option:selected").val();
+        var day = $("#day-add-day option:selected").val();
+        month = month.length == 2 ? month:'0'+month;
+        day = day.length == 2 ? day:'0'+day;
+
+        $.ajax({
+            url: "/user_add",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+                if (data.data.length == 0){
+                    alert('暂无数据')
+                    return
+                }
+
+                dtArr = [];
+                valueArr = [];
+
+                //遍历
+                $.each(data.data,function (n, value) {
+                    dtArr.push(value.createDate);
+                    valueArr.push(value.newUidCount)
+                })
+
+                // 指定图表的配置项和数据
+                option = {
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['每日新增用户数']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            magicType: {show: true, type: ['line', 'bar']},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    calculable: true,
+                    xAxis: [
+                        {
+                            type: 'category',
+                            // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                            data: dtArr
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '每日新增用户数',
+                            type: 'bar',
+                            // data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6],
+                            data: valueArr,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                dayChart.setOption(option);
+
+            },
+            error:function () {
+                alert("error")
+            }
+
+        })
+
+    })
+
+
+
+</script>
+</body>
+</html>

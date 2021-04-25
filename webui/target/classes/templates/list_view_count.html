@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+    <!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content" style="padding-top: 200px">
+
+    <!--最近7天列表页浏览次数统计-->
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="list-view-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="list-view-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="list-view-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input id="list-view-btn" type="button" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">最近 7 天列表页浏览次数统计</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="list_view_count" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+
+    var listDtArr = [];
+    var listValueArr = [];
+
+    var data = [[${listViewCountEntity}]];
+
+    $.each(data.data,function (n, value) {
+        listDtArr.push(value.dt);
+        listValueArr.push(value.listViewCount);
+    })
+
+    // import * as echarts from 'echarts';
+    // 最近7天收藏数统计
+    var listViewChart = echarts.init(document.getElementById('list_view_count'));
+
+    // 指定图表的配置项和数据
+    var colors = ['#5470C6', '#91CC75', '#EE6666'];
+
+    list_view_count_option = {
+        title: {
+            text: '最近7天列表页浏览次数统计'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'shadow'
+            }
+        },
+        legend: {
+            data: ['列表页浏览次数']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: {
+            type: 'value',
+            boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+            type: 'category',
+            // data: ['2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05']
+            data:listDtArr
+        },
+        series: [
+            {
+                name: '列表页浏览次数',
+                type: 'bar',
+                // data: [18203, 23489, 29034, 104970, 131744, 630230]
+                data:listValueArr
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    listViewChart.setOption(list_view_count_option);
+
+    //==================== 点击事件 ===========================
+
+    $("#list-view-btn").click(function () {
+
+        var year = $("#list-view-year option:selected").val();
+        var month = $("#list-view-month option:selected").val();
+        var day = $("#list-view-day option:selected").val();
+        month = month.length == 2?month:'0'+month;
+        day = day.length == 2?day:'0'+day;
+
+        $.ajax({
+            url: "/list_view_count",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+
+                listDtArr = [];
+                listValueArr = [];
+
+                $.each(data.data,function (n, value) {
+                    listDtArr.push(value.dt);
+                    listValueArr.push(value.listViewCount);
+                })
+
+
+                list_view_count_option = {
+                    title: {
+                        text: '最近7天列表页浏览次数统计'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'shadow'
+                        }
+                    },
+                    legend: {
+                        data: ['列表页浏览次数']
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'value',
+                        boundaryGap: [0, 0.01]
+                    },
+                    yAxis: {
+                        type: 'category',
+                        // data: ['2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05', '2021/04/05']
+                        data:listDtArr
+                    },
+                    series: [
+                        {
+                            name: '列表页浏览次数',
+                            type: 'bar',
+                            // data: [18203, 23489, 29034, 104970, 131744, 630230]
+                            data:listValueArr
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                listViewChart.setOption(list_view_count_option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+        })
+
+    })
+
+
+</script>
+</body>
+</html>

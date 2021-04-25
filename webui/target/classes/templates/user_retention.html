@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+<!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content" style="padding-top: 200px">
+
+
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="user-retention-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="user-retention-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="user-retention-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input id="user-retention-btn" type="button" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 293px;margin-top:20px">
+            <span>查看 </span>&nbsp;&nbsp;&nbsp;
+            <select id="retention-day" style="height:35px;width: 80px">
+                <option value="1">1</option>
+                <option value="3">3</option>
+                <option value="7">7</option>
+            </select>&nbsp;&nbsp;&nbsp;
+            <span> 天后留存情况</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">最近7天用户留存情况</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="user_retention" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    var dtArr = [];
+    var retentionCountArr = [];
+    var newUserCountArr = [];
+    var retentionRateArr = [];
+
+    var max = 0;
+    var data = [[${retentionDataEntity}]];
+
+    $.each(data.data,function (n, value) {
+        dtArr.push(value.statDate);
+        retentionCountArr.push(value.retentionCount);
+        newUserCountArr.push(value.newUidCount);
+        retentionRateArr.push(value.retentionRatio);
+        max = max > value.newUidCount? max : value.newUidCount;
+    })
+
+    // import * as echarts from 'echarts';
+    // 日活跃表
+    var dayChart = echarts.init(document.getElementById('user_retention'));
+
+    // 指定图表的配置项和数据
+    var colors = ['#5470C6', '#91CC75', '#EE6666'];
+
+    option = {
+        color: colors,
+
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross'
+            }
+        },
+        grid: {
+            right: '20%'
+        },
+        toolbox: {
+            feature: {
+                dataView: {show: true, readOnly: false},
+                restore: {show: true},
+                saveAsImage: {show: true}
+            }
+        },
+        legend: {
+            data: ['当日留存数', '当日新增数', '留存率']
+        },
+        xAxis: [
+            {
+                type: 'category',
+                axisTick: {
+                    alignWithLabel: true
+                },
+                // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                data:dtArr
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                name: '当日留存数',
+                min: 0,
+                max: max,
+                position: 'left',
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: colors[0]
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value}'
+                }
+            },
+            {
+                type: 'value',
+                name: '留存率',
+                min: 0,
+                max: 100,
+                position: 'right',
+                offset: 80,
+                axisLine: {
+                    show: true,
+                    lineStyle: {
+                        color: colors[1]
+                    }
+                },
+                axisLabel: {
+                    formatter: '{value} %'
+                }
+            }
+        ],
+        series: [
+            {
+                name: '当日留存数',
+                type: 'bar',
+                // data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6]
+                data:retentionCountArr
+            },
+            {
+                name: '当日新增数',
+                type: 'bar',
+                yAxisIndex: 0,
+                // data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6]
+                data:newUserCountArr
+            },
+            {
+                name: '留存率',
+                type: 'line',
+                yAxisIndex: 1,
+                // data: [20.0, 20.2, 30.3, 40.5, 60.3, 10.2, 20.3]
+                data: retentionRateArr
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    dayChart.setOption(option);
+
+    //======================= 按钮点击事件  =================================
+
+    $("#user-retention-btn").click(function () {
+
+        var year = $("#user-retention-year option:selected").val();
+        var month = $("#user-retention-month option:selected").val();
+        var day = $("#user-retention-day option:selected").val();
+        var retentionDay = $("#retention-day option:selected").val();
+
+        month = month.length == 2? month:'0'+month;
+        day = day.length == 2 ? day:'0'+day;
+
+        $.ajax({
+            url: "/user_retention?dt="+year+'-'+month+'-'+day+"&rd="+retentionDay,
+            type: "GET",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+
+                dtArr = [];
+                retentionCountArr = [];
+                newUserCountArr = [];
+                retentionRateArr = [];
+
+                $.each(data.data,function (n, value) {
+                    dtArr.push(value.statDate);
+                    retentionCountArr.push(value.retentionCount);
+                    newUserCountArr.push(value.newUidCount);
+                    retentionRateArr.push(value.retentionRatio);
+                    max = max > value.newUidCount? max : value.newUidCount;
+                })
+
+                option = {
+                    color: colors,
+
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    grid: {
+                        right: '20%'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {
+                        data: ['当日留存数', '当日新增数', '留存率']
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                            data:dtArr
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '当日留存数',
+                            min: 0,
+                            max: max,
+                            position: 'left',
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[0]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '留存率',
+                            min: 0,
+                            max: 100,
+                            position: 'right',
+                            offset: 80,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[1]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value} %'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '当日留存数',
+                            type: 'bar',
+                            // data: [2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6]
+                            data:retentionCountArr
+                        },
+                        {
+                            name: '当日新增数',
+                            type: 'bar',
+                            yAxisIndex: 0,
+                            // data: [2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6]
+                            data:newUserCountArr
+                        },
+                        {
+                            name: '留存率',
+                            type: 'line',
+                            yAxisIndex: 1,
+                            // data: [20.0, 20.2, 30.3, 40.5, 60.3, 10.2, 20.3]
+                            data: retentionRateArr
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                dayChart.setOption(option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+
+        })
+
+    })
+
+
+</script>
+</body>
+</html>
