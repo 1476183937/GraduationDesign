@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+    <!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content">
+
+    <!--本日各省份活跃数统计-->
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="privince-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="province-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="province-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input id="province-btn" type="button" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1 style="font-weight:bold;text-align:center;">本日各省份活跃数统计</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="province_activity_day" style="width: 1000px;height:600px;"></div>
+        </div>
+    </div>
+
+
+
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-12">
+            <h1 id="city-title" style="font-weight:bold;text-align:center;">某省各个城市活跃情况</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="padding-left: 60px">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="city_activity_day" style="width: 1000px;height:600px;"></div>
+        </div>
+    </div>
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+<script type="text/javascript" src="/js/bmap.min.js"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+
+    var provinceNamesArr = [];
+    var activityCountArr = [];
+    var cityCountArr = [];
+
+
+    var data = [[${provinceActivityCountEntity}]];
+    var hainanData = [[${hainanCityCountEntity}]]
+
+    $.each(data.data,function (n, val) {
+        provinceNamesArr.push(val.provinceName);
+        var tmp = {value:val.activityCount,name:val.provinceName};
+        activityCountArr.push(tmp);
+    });
+
+    $.each(hainanData.data,function (n, val) {
+        var tmp = {value:val.activityCount,name:val.cityName};
+        cityCountArr.push(tmp);
+    });
+
+    // import * as echarts from 'echarts';
+    // 本日各省份活跃数统计
+    var provinceChart = echarts.init(document.getElementById('province_activity_day'));
+
+    // 指定图表的配置项和省份
+    var colors = ['#5470C6', '#91CC75', '#EE6666'];
+
+    // provinceChart.on('click', function(params) {
+    //     alert(params.name)
+    // });
+
+    /*var legendData=['省份1', '省份2', '省份3', '省份4', '省份5', '省份6', '省份7','省份8','省份9',,'省份10','省份11',
+        ,'省份12',,'省份13','省份14','省份15','省份16','省份17','省份18',
+        '省份19','省份20','省份21','省份22','省份23','省份24','省份25','省份26',
+        '省份27','省份28','省份29','省份30','省份31','省份32','省份33','省份34']
+
+    var seriesData=[{
+        value: 5,
+        name: '省份1'
+    },
+        {
+            value: 15,
+            name: '省份2'
+        },
+        {
+            value: 25,
+            name: '省份3'
+        },
+        {
+            value: 20,
+            name: '省份4'
+        },
+        {
+            value: 35,
+            name: '省份5'
+        },
+        {
+            value: 35,
+            name: '省份6'
+        },
+        {
+            value: 35,
+            name: '省份7'
+        },
+        {
+            value: 50,
+            name: '省份8'
+        },
+        {
+            value: 60,
+            name: '省份9'
+        },
+        {
+            value: 50,
+            name: '省份10'
+        },
+        {
+            value: 60,
+            name: '省份11'
+        },
+        {
+            value: 35,
+            name: '省份12'
+        },
+        {
+            value: 35,
+            name: '省份13'
+        },
+        {
+            value: 35,
+            name: '省份14'
+        },
+        {
+            value: 50,
+            name: '省份15'
+        },
+        {
+            value: 60,
+            name: '省份16'
+        },
+        {
+            value: 50,
+            name: '省份17'
+        },
+        {
+            value: 60,
+            name: '省份18'
+        },
+        {
+            value: 60,
+            name: '省份19'
+        },
+        {
+            value: 35,
+            name: '省份20'
+        },
+        {
+            value: 35,
+            name: '省份21'
+        },
+        {
+            value: 35,
+            name: '省份22'
+        },
+        {
+            value: 50,
+            name: '省份23'
+        },
+        {
+            value: 60,
+            name: '省份24'
+        },
+        {
+            value: 50,
+            name: '省份25'
+        },
+        {
+            value: 60,
+            name: '省份26'
+        },
+        {
+            value: 60,
+            name: '省份27'
+        },
+        {
+            value: 35,
+            name: '省份28'
+        },
+        {
+            value: 35,
+            name: '省份29'
+        },
+        {
+            value: 35,
+            name: '省份30'
+        },
+        {
+            value: 50,
+            name: '省份31'
+        },
+        {
+            value: 60,
+            name: '省份32'
+        },
+        {
+            value: 50,
+            name: '省份33'
+        },
+        {
+            value: 60,
+            name: '省份34'
+        }]*/
+
+    province_option = {
+        title: {
+            text: '同名数量统计',
+            subtext: '纯属虚构',
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            type: 'scroll',
+            orient: 'vertical',
+            right: 10,
+            top: 20,
+            bottom: 20,
+            // data: legendData,
+            data: provinceNamesArr,
+
+            selected: 1
+        },
+        series: [
+            {
+                name: '活跃数',
+                type: 'pie',
+                radius: '55%',
+                center: ['40%', '50%'],
+                // data: seriesData,
+                data: activityCountArr,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和省份显示图表。
+    provinceChart.setOption(province_option);
+
+
+    var cityChart = echarts.init(document.getElementById('city_activity_day'));
+
+    city_option = {
+        title: {
+            left: 'center'
+        },
+        tooltip: {
+            trigger: 'item',
+            formatter: '{a} <br/>{b} : {c} ({d}%)'
+        },
+        legend: {
+            orient: 'vertical',
+            left: 'left',
+        },
+        series: [
+            {
+                name: '新增数',
+                type: 'pie',
+                radius: '50%',
+                data: cityCountArr,
+                emphasis: {
+                    itemStyle: {
+                        shadowBlur: 10,
+                        shadowOffsetX: 0,
+                        shadowColor: 'rgba(0, 0, 0, 0.5)'
+                    }
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和省份显示图表。
+    cityChart.setOption(city_option);
+
+    //================= 点击事件 =====================
+
+    $("#province-btn").click(function () {
+
+        var year = $("#privince-year option:selected").val();
+        var month = $("#province-month option:selected").val();
+        var day = $("#province-day option:selected").val();
+        month = month.length == 2?month:'0'+month;
+        day = day.length == 2?day:'0'+day;
+
+        $.ajax({
+
+            url: "/province_count",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+                provinceNamesArr = [];
+                activityCountArr = [];
+
+                $.each(data.data,function (n, val) {
+                    provinceNamesArr.push(val.provinceName);
+                    var tmp = {value:val.activityCount,name:val.provinceName};
+                    activityCountArr.push(tmp);
+                });
+
+                province_option = {
+                    title: {
+                        text: '同名数量统计',
+                        subtext: '纯属虚构',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        type: 'scroll',
+                        orient: 'vertical',
+                        right: 10,
+                        top: 20,
+                        bottom: 20,
+                        // data: legendData,
+                        data: provinceNamesArr,
+
+                        selected: 1
+                    },
+                    series: [
+                        {
+                            name: '活跃数',
+                            type: 'pie',
+                            radius: '55%',
+                            center: ['40%', '50%'],
+                            // data: seriesData,
+                            data: activityCountArr,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和省份显示图表。
+                provinceChart.setOption(province_option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+        })
+
+    })
+
+    provinceChart.on('click', function(params) {
+
+        var year = $("#privince-year option:selected").val();
+        var month = $("#province-month option:selected").val();
+        var day = $("#province-day option:selected").val();
+        month = month.length == 2?month:'0'+month;
+        day = day.length == 2?day:'0'+day;
+
+        $.ajax({
+            url: "/city_count?province="+params.name+"&dt="+year+'-'+month+'-'+day,
+            // data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success:function (data) {
+
+                cityCountArr = [];
+                $.each(data.data,function (n, val) {
+                    var tmp = {value:val.activityCount,name:val.cityName};
+                    cityCountArr.push(tmp);
+                });
+
+                $("#city-title").text(params.name+'各个城市活跃情况');
+
+                city_option = {
+                    title: {
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item',
+                        formatter: '{a} <br/>{b} : {c} ({d}%)'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                    },
+                    series: [
+                        {
+                            name: '新增数',
+                            type: 'pie',
+                            radius: '50%',
+                            data: cityCountArr,
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和省份显示图表。
+                cityChart.setOption(city_option);
+
+            },
+            error:function () {
+                alert('error')
+            }
+        })
+
+    });
+
+</script>
+</body>
+</html>

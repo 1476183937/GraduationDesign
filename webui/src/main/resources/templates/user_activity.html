@@ -1,0 +1,1263 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <!-- 引入 ECharts 文件 -->
+    <!--    <script src="echarts.js"></script>-->
+    <link href="/css/bootstrap.min.css?v=3.3.6" rel="stylesheet">
+    <link href="/css/style.css?v=4.1.0" rel="stylesheet">
+    <script src="/js/echarts.js"></script>
+
+
+</head>
+<body>
+
+<div class="wrapper wrapper-content">
+
+
+    <!--日活跃-->
+    <div class="row">
+        <div class="col-sm-3">
+            <select id="day-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="day-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div id="day-activity-day" class="col-sm-3" >
+            <select style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input type="button" id="day-activity-btn" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="day_activity" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+    <!--周活跃-->
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-3">
+            <select id="wk-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="wk-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="wk-activity-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input type="button" id="wk-activity-btn" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="wk_activity" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+    <!--月活跃-->
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-3">
+            <select id="mn-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="mn-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input type="button" id="mn-activity-btn" value="确认" style="margin-left:-150px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="mn_activity" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+    <!--最近3周连续活跃-->
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-3">
+            <select id="cwk-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="cwk-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="cwk-activity-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <input type="button" id="cwk-activity-btn" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="continue_3_wk_activity" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+    <!--最近7天连续3天活跃-->
+    <div class="row" style="margin-top: 50px">
+        <div class="col-sm-3">
+            <select id="cday-activity-year" style="margin-left:150px;height:35px;width: 100px">
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+            </select>
+            <span>年</span>
+        </div>
+        <div class="col-sm-3" >
+            <select id="cday-activity-month" style="height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+            </select>
+            <span>月</span>
+        </div>
+
+        <div class="col-sm-3" >
+            <select id="cday-activity-day" style="margin-left:-150px;height: 35px;width: 100px">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+                <option value="13">13</option>
+                <option value="14">14</option>
+                <option value="15">15</option>
+                <option value="16">16</option>
+                <option value="17">17</option>
+                <option value="18">18</option>
+                <option value="19">19</option>
+                <option value="20">20</option>
+                <option value="21">21</option>
+                <option value="22">22</option>
+                <option value="23">23</option>
+                <option value="24">24</option>
+                <option value="25">25</option>
+                <option value="26">26</option>
+                <option value="27">27</option>
+                <option value="28">28</option>
+                <option value="29">29</option>
+                <option value="30">30</option>
+                <option value="31">31</option>
+            </select>
+            <span>日</span>
+        </div>
+        <div class="col-sm-3" >
+            <input type="button" id="cday-activity-btn" value="确认" style="margin-left:-300px;height: 35px;width: 100px">
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- 为 ECharts 准备一个具备大小（宽高）的 DOM -->
+            <div id="continue_3_day_activity" style="width: 1000px;height:400px;"></div>
+        </div>
+    </div>
+
+
+
+</div>
+
+
+<!-- 全局js -->
+<script src="/js/jquery.min.js?v=2.1.4"></script>
+<script src="/js/bootstrap.min.js?v=3.3.6"></script>
+
+
+<script type="text/javascript" th:inline="javascript">
+
+    // 填充日活跃表的数据
+    var dayData = [[${dayActivity}]];
+    var dayDateArr = [];
+    var dayValueArr = [];
+    var dayActivityList = dayData.data;
+    $.each(dayActivityList,function (n, value) {
+        dayDateArr.push(value.dt)
+        dayValueArr.push(value.dayCount)
+    })
+
+    //填充周活跃表的数据
+    var wkData = [[${wkActivity}]];
+    var wkDateArr = [];
+    var wkValueArr = [];
+    var wkActivityList = wkData.data;
+    $.each(wkActivityList,function (n, value) {
+        wkDateArr.push(value.dt)
+        wkValueArr.push(value.wkCount)
+    })
+
+    //填充月活跃表的数据
+    var mnData = [[${mnActivity}]];
+    var mnDateArr = [];
+    var mnValueArr = [];
+    var mnActivityList = mnData.data;
+    $.each(mnActivityList,function (n, value) {
+        mnDateArr.push(value.dt)
+        mnValueArr.push(value.mnCount)
+    })
+
+    //填充连续3周活跃表的数据
+    var cwkData = [[${threeWkActivity}]];
+    var cwkDateArr = [];
+    var cwkValueArr = [];
+    var cwkActivityList = cwkData.data;
+    $.each(cwkActivityList,function (n, value) {
+        cwkDateArr.push(value.dt)
+        cwkValueArr.push(value.continuityCount)
+    })
+
+    //填充最近7天连续3天活跃表的数据
+    var cdayData = [[${sevenDayActivity}]];
+    var cdayDateArr = [];
+    var cdayValueArr = [];
+    var cdayActivityList = cdayData.data;
+    $.each(cdayActivityList,function (n, value) {
+        cdayDateArr.push(value.dt)
+        cdayValueArr.push(value.continuityCount)
+    })
+
+
+    // import * as echarts from 'echarts';
+    // 日活跃表
+    var dayChart = echarts.init(document.getElementById('day_activity'));
+
+    // 指定图表的配置项和数据
+    dayOption = {
+        title: {
+            text: '最近7天用户活跃数',
+            subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['活跃用户数']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            // data: ["2020/04/13","2020/04/14","2020/04/15","2020/04/16","2020/04/17","2020/04/18","2020/04/19"]
+            data: dayDateArr
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '活跃用户数',
+                type: 'line',
+                // data: [180, 711, 713, 811,992, 812, 999],
+                data: dayValueArr,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    dayChart.setOption(dayOption);
+
+    //周活跃表
+    var wkChart = echarts.init(document.getElementById('wk_activity'));
+
+    // 指定图表的配置项和数据
+    wkOption = {
+        title: {
+            text: '最近5周用户活跃数',
+            subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['周活跃用户数']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            // data: ["2020/04/13-04/12","2020/04/14-04/12","2020/04/15-04/12","2020/04/16-04/12","2020/04/17-04/12","2020/04/18-04/12","2020/04/19-04/12"]
+            data: wkDateArr
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '周活跃用户数',
+                type: 'line',
+                // data: [180, 711, 713, 811,992, 812, 999],
+                data: wkValueArr,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    wkChart.setOption(wkOption);
+
+    //月活跃表
+    var mnChart = echarts.init(document.getElementById('mn_activity'));
+
+    // 指定图表的配置项和数据
+    mnOption = {
+        title: {
+            text: '最近5月用户活跃数',
+            subtext: '纯属虚构'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['月活跃用户数']
+        },
+        toolbox: {
+            show: true,
+            feature: {
+                dataZoom: {
+                    yAxisIndex: 'none'
+                },
+                dataView: {readOnly: false},
+                magicType: {type: ['line', 'bar']},
+                restore: {},
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            // data: ["2020/04","2020/03","2020/04","2020/04","2020/04","2020/04","2020/04"]
+            data: mnDateArr
+        },
+        yAxis: {
+            type: 'value',
+            axisLabel: {
+                formatter: '{value}'
+            }
+        },
+        series: [
+            {
+                name: '月活跃用户数',
+                type: 'line',
+                // data: [180, 711, 713, 811,992, 812, 999],
+                data: mnValueArr,
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '最大值'},
+                        {type: 'min', name: '最小值'}
+                    ]
+                },
+                markLine: {
+                    data: [
+                        {type: 'average', name: '平均值'}
+                    ]
+                }
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    mnChart.setOption(mnOption);
+
+    //连续3周活跃表
+    var continue_3_wkChart = echarts.init(document.getElementById('continue_3_wk_activity'));
+
+    // 指定图表的配置项和数据
+    continue_3_wk_option = {
+        color: ['#00DDFF'],
+        title: {
+            text: '最近3周连续活跃用户数统计'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['Line 1']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                data: cwkDateArr
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '连续3周活跃用户数',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(128, 255, 165)'
+                    }, {
+                        offset: 0,
+                        color: 'rgba(1, 191, 236)'
+                    }])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                // data: [140, 232, 101, 264, 90, 340, 250]
+                data: cwkValueArr
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    continue_3_wkChart.setOption(continue_3_wk_option);
+
+
+    //最近7天连续3天活跃表
+    var continue_3_dayChart = echarts.init(document.getElementById('continue_3_day_activity'));
+
+    // 指定图表的配置项和数据
+    continue_3_day_option = {
+        color: ['#00DDFF'],
+        title: {
+            text: '最近7天连续3天活跃表'
+        },
+        tooltip: {
+            trigger: 'axis',
+            axisPointer: {
+                type: 'cross',
+                label: {
+                    backgroundColor: '#6a7985'
+                }
+            }
+        },
+        legend: {
+            data: ['Line 1']
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                data: cdayDateArr
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value'
+            }
+        ],
+        series: [
+            {
+                name: '最近7天连续3天活跃表',
+                type: 'line',
+                stack: '总量',
+                smooth: true,
+                lineStyle: {
+                    width: 0
+                },
+                showSymbol: false,
+                areaStyle: {
+                    opacity: 0.8,
+                    color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                        offset: 0,
+                        color: 'rgba(128, 255, 165)'
+                    }, {
+                        offset: 0,
+                        color: 'rgba(1, 191, 236)'
+                    }])
+                },
+                emphasis: {
+                    focus: 'series'
+                },
+                // data: [140, 232, 101, 264, 90, 340, 250]
+                data: cdayValueArr
+            }
+        ]
+    };
+
+    // 使用刚指定的配置项和数据显示图表。
+    continue_3_dayChart.setOption(continue_3_day_option);
+
+
+    //======================== 点击查询事件  ============================
+    $("#day-activity-btn").click(function () {
+        var year = $("#day-activity-year option:selected").val();
+        var month = $("#day-activity-month option:selected").val();
+        var day = $("#day-activity-day option:selected").val();
+        month = month.length==2?month:'0'+month;
+        day = day.length==2?day:'0'+day;
+
+        $.ajax({
+            url: "/activity/day",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            // dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.data.length == 0 ){
+                    alert("暂无数据");
+                    return;
+                }
+                var dayDatatmp = [[${dayActivity}]];
+                var dayDateArrtmp = [];
+                var dayValueArrtmp = [];
+                var dayActivityListtmp = data.data;
+                $.each(dayActivityListtmp,function (n, value) {
+                    dayDateArrtmp.push(value.dt)
+                    dayValueArrtmp.push(value.dayCount)
+                })
+
+                // 指定图表的配置项和数据
+                dayOption = {
+                    title: {
+                        text: '最近7天用户活跃数',
+                        subtext: '纯属虚构'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['活跃用户数']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        // data: ["2020/04/13","2020/04/14","2020/04/15","2020/04/16","2020/04/17","2020/04/18","2020/04/19"]
+                        data: dayDateArrtmp
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '活跃用户数',
+                            type: 'line',
+                            // data: [180, 711, 713, 811,992, 812, 999],
+                            data: dayValueArrtmp,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                dayChart.setOption(dayOption);
+
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+    })
+
+    $("#wk-activity-btn").click(function () {
+        var year = $("#wk-activity-year option:selected").val();
+        var month = $("#wk-activity-month option:selected").val();
+        var day = $("#wk-activity-day option:selected").val();
+        month = month.length==2?month:'0'+month;
+        day = day.length==2?day:'0'+day;
+
+        $.ajax({
+            url: "/activity/wk",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            // dataType: "json",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.data.length == 0 ){
+                    alert("暂无数据");
+                    return;
+                }
+
+                wkDateArr = [];
+                wkValueArr = [];
+                wkActivityList = data.data;
+                $.each(wkActivityList,function (n, value) {
+                    wkDateArr.push(value.dt)
+                    wkValueArr.push(value.wkCount)
+                })
+
+                // 指定图表的配置项和数据
+                wkOption = {
+                    title: {
+                        text: '最近5周用户活跃数',
+                        subtext: '纯属虚构'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['周活跃用户数']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        // data: ["2020/04/13-04/12","2020/04/14-04/12","2020/04/15-04/12","2020/04/16-04/12","2020/04/17-04/12","2020/04/18-04/12","2020/04/19-04/12"]
+                        data: wkDateArr
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '周活跃用户数',
+                            type: 'line',
+                            // data: [180, 711, 713, 811,992, 812, 999],
+                            data: wkValueArr,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                wkChart.setOption(wkOption);
+
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+    })
+
+    $("#mn-activity-btn").click(function () {
+        var year = $("#mn-activity-year option:selected").val();
+        var month = $("#mn-activity-month option:selected").val();
+        month = month.length==2?month:'0'+month;
+
+        $.ajax({
+            url: "/activity/mn",
+            data: year+'-'+month+'-01',
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.data.length == 0 ){
+                    alert("暂无数据");
+                    return;
+                }
+
+                mnDateArr = [];
+                mnValueArr = [];
+                mnActivityList = data.data;
+                $.each(mnActivityList,function (n, value) {
+                    mnDateArr.push(value.dt)
+                    mnValueArr.push(value.mnCount)
+                })
+                // 指定图表的配置项和数据
+                mnOption = {
+                    title: {
+                        text: '最近5月用户活跃数',
+                        subtext: '纯属虚构'
+                    },
+                    tooltip: {
+                        trigger: 'axis'
+                    },
+                    legend: {
+                        data: ['月活跃用户数']
+                    },
+                    toolbox: {
+                        show: true,
+                        feature: {
+                            dataZoom: {
+                                yAxisIndex: 'none'
+                            },
+                            dataView: {readOnly: false},
+                            magicType: {type: ['line', 'bar']},
+                            restore: {},
+                            saveAsImage: {}
+                        }
+                    },
+                    xAxis: {
+                        type: 'category',
+                        boundaryGap: false,
+                        // data: ["2020/04","2020/03","2020/04","2020/04","2020/04","2020/04","2020/04"]
+                        data: mnDateArr
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: '{value}'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '月活跃用户数',
+                            type: 'line',
+                            // data: [180, 711, 713, 811,992, 812, 999],
+                            data: mnValueArr,
+                            markPoint: {
+                                data: [
+                                    {type: 'max', name: '最大值'},
+                                    {type: 'min', name: '最小值'}
+                                ]
+                            },
+                            markLine: {
+                                data: [
+                                    {type: 'average', name: '平均值'}
+                                ]
+                            }
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                mnChart.setOption(mnOption);
+
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+    })
+
+    $("#cwk-activity-btn").click(function () {
+        var year = $("#cwk-activity-year option:selected").val();
+        var month = $("#cwk-activity-month option:selected").val();
+        var day = $("#cwk-activity-day option:selected").val();
+        month = month.length==2?month:'0'+month;
+        day = day.length==2?day:'0'+day;
+
+
+        $.ajax({
+            url: "/activity/cwk",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.data.length == 0 ){
+                    alert("暂无数据");
+                    return;
+                }
+
+                cwkDateArr = [];
+                cwkValueArr = [];
+                cwkActivityList = data.data;
+                $.each(cwkActivityList,function (n, value) {
+                    cwkDateArr.push(value.dt)
+                    cwkValueArr.push(value.continuityCount)
+                })
+                // 指定图表的配置项和数据
+                continue_3_wk_option = {
+                    color: ['#00DDFF'],
+                    title: {
+                        text: '最近3周连续活跃用户数统计'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        }
+                    },
+                    legend: {
+                        data: ['Line 1']
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                            data: cwkDateArr
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '连续3周活跃用户数',
+                            type: 'line',
+                            stack: '总量',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(128, 255, 165)'
+                                }, {
+                                    offset: 0,
+                                    color: 'rgba(1, 191, 236)'
+                                }])
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            // data: [140, 232, 101, 264, 90, 340, 250]
+                            data: cwkValueArr
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                continue_3_wkChart.setOption(continue_3_wk_option);
+
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+    })
+
+    $("#cday-activity-btn").click(function () {
+        var year = $("#cday-activity-year option:selected").val();
+        var month = $("#cday-activity-month option:selected").val();
+        var day = $("#cday-activity-day option:selected").val();
+        month = month.length==2?month:'0'+month;
+        day = day.length==2?day:'0'+day;
+
+
+        $.ajax({
+            url: "/activity/cday",
+            data: year+'-'+month+'-'+day,
+            type: "POST",
+            contentType: 'application/json; charset=utf-8',
+            success: function(data) {
+                if (data.data.length == 0 ){
+                    alert("暂无数据");
+                    return;
+                }
+
+                cdayDateArr = [];
+                cdayValueArr = [];
+                cdayActivityList = data.data;
+                $.each(cdayActivityList,function (n, value) {
+                    cdayDateArr.push(value.dt)
+                    cdayValueArr.push(value.continuityCount)
+                })
+
+                // 指定图表的配置项和数据
+                continue_3_day_option = {
+                    color: ['#00DDFF'],
+                    title: {
+                        text: '最近7天连续3天活跃表'
+                    },
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross',
+                            label: {
+                                backgroundColor: '#6a7985'
+                            }
+                        }
+                    },
+                    legend: {
+                        data: ['Line 1']
+                    },
+                    toolbox: {
+                        feature: {
+                            saveAsImage: {}
+                        }
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            boundaryGap: false,
+                            // data: ['2020/04/05', '2020/04/06', '2020/04/07', '2020/04/08', '2020/04/09', '2020/04/10', '2020/04/11']
+                            data: cdayDateArr
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value'
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '最近7天连续3天活跃表',
+                            type: 'line',
+                            stack: '总量',
+                            smooth: true,
+                            lineStyle: {
+                                width: 0
+                            },
+                            showSymbol: false,
+                            areaStyle: {
+                                opacity: 0.8,
+                                color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [{
+                                    offset: 0,
+                                    color: 'rgba(128, 255, 165)'
+                                }, {
+                                    offset: 0,
+                                    color: 'rgba(1, 191, 236)'
+                                }])
+                            },
+                            emphasis: {
+                                focus: 'series'
+                            },
+                            // data: [140, 232, 101, 264, 90, 340, 250]
+                            data: cdayValueArr
+                        }
+                    ]
+                };
+
+                // 使用刚指定的配置项和数据显示图表。
+                continue_3_dayChart.setOption(continue_3_day_option);
+
+            },
+            error:function () {
+                alert("error")
+            }
+        });
+    })
+
+</script>
+</body>
+</html>
