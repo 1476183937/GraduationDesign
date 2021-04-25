@@ -8,12 +8,30 @@ package com.hnust.entity;
 public class AppointmentEvent extends AbstratEvent {
 
     private String id;	              //主键id
+    private String agentUserId;	      //以后带用户看房等的用户ID，中介
     private String userId;	          //用户id
     private String hourseId;	      //房子的id
     private String hourseName;	      //房子的名称
     private String appointmentTime;  //客户预约看房的时间
     private String category;	      //房子的类别
     private String area;	          //区域
+    private String hourseType;        //户型：1房=1，2房=2...
+
+    public String getHourseType() {
+        return hourseType;
+    }
+
+    public void setHourseType(String hourseType) {
+        this.hourseType = hourseType;
+    }
+
+    public String getAgentUserId() {
+        return agentUserId;
+    }
+
+    public void setAgentUserId(String agentUserId) {
+        this.agentUserId = agentUserId;
+    }
 
     public String getId() {
         return id;

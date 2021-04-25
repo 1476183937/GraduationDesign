@@ -13,6 +13,15 @@ public class DisplayEvent extends AbstratEvent{
     private String place;      //顺序（第几条商品，第一条为0，第二条为1，如此类推）
     private String category;   //物品分类ID（服务端定义的分类ID）
     private String area;       //房屋所在区域
+    private String hourseType; //户型:一房=1、二房=2、三房=3、四房=4...
+
+    public String getHourseType() {
+        return hourseType;
+    }
+
+    public void setHourseType(String hourseType) {
+        this.hourseType = hourseType;
+    }
 
     public int getAction() {
         return action;

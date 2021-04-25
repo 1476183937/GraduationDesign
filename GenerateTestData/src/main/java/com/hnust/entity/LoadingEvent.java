@@ -11,6 +11,15 @@ public class LoadingEvent extends AbstratEvent {
     private String loadingTime;  //加载时长
     private String loadingWay;   //数据获取方式：读取缓存=1、从接口拉取数据=2
     private String type;         //加载类型：自动加载=1、用户下拽加载=2、底部加载=3
+    private String resultCount;  //返回的结果条数
+
+    public String getResultCount() {
+        return resultCount;
+    }
+
+    public void setResultCount(String resultCount) {
+        this.resultCount = resultCount;
+    }
 
     public int getAction() {
         return action;

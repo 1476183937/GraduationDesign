@@ -8,6 +8,7 @@ package com.hnust.entity;
 public class CommonLogData {
 
     private String mid;  //设备标识
+    private String sessionid;  //会话标识
     private String uid;  //用户id
     private String sr;   //渠道
     private String os;   //系统版本号
@@ -16,9 +17,26 @@ public class CommonLogData {
     private String ba;   //手机品牌
     private String hw;   //屏幕宽高：123x345
     private String t;    //客户单产生日志的时间，时间戳类型
+    private String network;
     private String ln;   //经度
     private String la;   //纬度
     private String url;  //请求的url
+
+    public String getSessionid() {
+        return sessionid;
+    }
+
+    public void setSessionid(String sessionid) {
+        this.sessionid = sessionid;
+    }
+
+    public String getNetwork() {
+        return network;
+    }
+
+    public void setNetwork(String network) {
+        this.network = network;
+    }
 
     public String getMid() {
         return mid;

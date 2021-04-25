@@ -8,10 +8,10 @@ package com.hnust.entity;
 public class PraiseEvent extends AbstratEvent {
 
     private String id;	        //主键id
-    private String userid;	    //用户id
-    private String target_id;	//点赞的对象id
+    private String userId;	    //用户id
+    private String targetId;	//点赞的对象id
     private String type;	    //点赞类型：评论点赞=1、文字点赞=2
-    private String add_time;	//添加时间
+    private String addTime;	//添加时间
 
     public String getId() {
         return id;
@@ -21,20 +21,20 @@ public class PraiseEvent extends AbstratEvent {
         this.id = id;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getTarget_id() {
-        return target_id;
+    public String getTargetId() {
+        return targetId;
     }
 
-    public void setTarget_id(String target_id) {
-        this.target_id = target_id;
+    public void setTargetId(String targetId) {
+        this.targetId = targetId;
     }
 
     public String getType() {
@@ -45,11 +45,11 @@ public class PraiseEvent extends AbstratEvent {
         this.type = type;
     }
 
-    public String getAdd_time() {
-        return add_time;
+    public String getAddTime() {
+        return addTime;
     }
 
-    public void setAdd_time(String add_time) {
-        this.add_time = add_time;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }

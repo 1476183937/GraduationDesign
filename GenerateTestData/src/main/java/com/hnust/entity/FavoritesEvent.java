@@ -8,12 +8,12 @@ package com.hnust.entity;
 public class FavoritesEvent extends AbstratEvent {
 
     private String id;	        //主键
-    private String userid;	    //用户ID
-    private String hourse_id;	//商品id
+    private String userId;	    //用户ID
+    private String hourseId;	//商品id
     private String hourseName;  //房屋的名称
     private String area;        //房子所在的区域
     private String category;    //类别
-    private String add_time;	//创建时间
+    private String addTime;	//创建时间
 
 
     public String getHourseName() {
@@ -48,27 +48,27 @@ public class FavoritesEvent extends AbstratEvent {
         this.id = id;
     }
 
-    public String getHourse_id() {
-        return hourse_id;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setHourse_id(String hourse_id) {
-        this.hourse_id = hourse_id;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getHourseId() {
+        return hourseId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setHourseId(String hourseId) {
+        this.hourseId = hourseId;
     }
 
-    public String getAdd_time() {
-        return add_time;
+    public String getAddTime() {
+        return addTime;
     }
 
-    public void setAdd_time(String add_time) {
-        this.add_time = add_time;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }

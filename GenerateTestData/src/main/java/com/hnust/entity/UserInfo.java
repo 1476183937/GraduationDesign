@@ -13,6 +13,7 @@ public class UserInfo {
     private String userName;
     private String phoneNum;
     private int age;
+    private int sex;    //性别：0：女 1：男
     private String lng; //经度
     private String lat; //纬度
     private String area; //区域
@@ -21,6 +22,15 @@ public class UserInfo {
     private ArrayList<String> os; //用户常用的手机的系统版本号
     private ArrayList<String> network; //用户常用的网络类型
     private ArrayList<String> bas; //用户常用的手机品牌
+
+
+    public int getSex() {
+        return sex;
+    }
+
+    public void setSex(int sex) {
+        this.sex = sex;
+    }
 
     public ArrayList<String> getBas() {
         return bas;

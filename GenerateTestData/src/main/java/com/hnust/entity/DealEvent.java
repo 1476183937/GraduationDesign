@@ -8,6 +8,7 @@ package com.hnust.entity;
 public class DealEvent extends AbstratEvent {
 
     private String id;	        //成交id
+    private String agentUserId;	//中介id
     private String userId;	    //客户id
     private String hourseId;	//房子的id
     private String hourseName;	//房子的名称
@@ -16,6 +17,15 @@ public class DealEvent extends AbstratEvent {
     private String category;	//房子的类别
     private String area;	    //房子的区域
     private String hourseType;  //户型:一房=1、二房=2、三房=3、四房=4...
+
+
+    public String getAgentUserId() {
+        return agentUserId;
+    }
+
+    public void setAgentUserId(String agentUserId) {
+        this.agentUserId = agentUserId;
+    }
 
     public String getHourseType() {
         return hourseType;

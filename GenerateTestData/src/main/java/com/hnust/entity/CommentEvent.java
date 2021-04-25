@@ -9,10 +9,10 @@ public class CommentEvent extends AbstratEvent {
 
     private String commentId;	   //评论id
     private String commentedId;    //被评论的房屋或者文章的id
-    private String userid;	       //用户id
+    private String userId;	       //用户id
     private String p_commentId;   //父级评论id(为0则是一级评论,不为0则是回复)
     private String content;	       //评论内容
-    private String addtime;	       //创建时间
+    private String addTime;	       //创建时间
     //private String praiseCount;    //点赞数量
     //private String replyCount;	   //回复数量
 
@@ -33,12 +33,12 @@ public class CommentEvent extends AbstratEvent {
         this.commentedId = commentedId;
     }
 
-    public String getUserid() {
-        return userid;
+    public String getUserId() {
+        return userId;
     }
 
-    public void setUserid(String userid) {
-        this.userid = userid;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getP_commentId() {
@@ -57,11 +57,11 @@ public class CommentEvent extends AbstratEvent {
         this.content = content;
     }
 
-    public String getAddtime() {
-        return addtime;
+    public String getAddTime() {
+        return addTime;
     }
 
-    public void setAddtime(String addtime) {
-        this.addtime = addtime;
+    public void setAddTime(String addTime) {
+        this.addTime = addTime;
     }
 }
